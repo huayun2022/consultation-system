@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心理咨询预约系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: #fff;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .notice {
+            background: #f0f7ff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-align: left;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #666;
+        }
+        .notice strong {
+            color: #333;
+        }
+        .tech-phone {
+            text-align: center;
+            padding: 10px;
+            color: #888;
+            font-size: 14px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: #4a90d9;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: #357abd;
+        }
+        .btn-secondary {
+            background: #fff;
+            color: #4a90d9;
+            border: 1px solid #4a90d9;
+        }
+        .btn-secondary:hover {
+            background: #f0f7ff;
+        }
+        .btn-success {
+            background: #52c41a;
+            color: #fff;
+        }
+        .btn-success:hover {
+            background: #389e0d;
+        }
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .card h2 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4a90d9;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        .form-row .form-group {
+            flex: 1;
+        }
+        .result {
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+        .result-pending {
+            background: #fff7e6;
+            border: 1px solid #ffd591;
+        }
+        .result-replied {
+            background: #f6ffed;
+            border: 1px solid #b7eb8f;
+        }
+        .result-title {
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .result-content {
+            line-height: 1.8;
+            font-size: 14px;
+        }
+        .appointment-item {
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+        .appointment-item.pending {
+            border-left: 3px solid #faad14;
+        }
+        .appointment-item.replied {
+            border-left: 3px solid #52c41a;
+        }
+        .appointment-info {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #666;
+        }
+        .appointment-info strong {
+            color: #333;
+        }
+        .appointment-actions {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #4a90d9;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 14px;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .tab.active {
+            background: #4a90d9;
+            color: #fff;
+        }
+        .hidden {
+            display: none;
+        }
+        .alert {
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        .alert-success {
+            background: #f6ffed;
+            border: 1px solid #b7eb8f;
+            color: #52c41a;
+        }
+        .alert-error {
+            background: #fff2f0;
+            border: 1px solid #ffccc7;
+            color: #ff4d4f;
+        }
+        .btn-danger {
+            background: #ff4d4f;
+            color: #fff;
+        }
+        .btn-danger:hover {
+            background: #ff7875;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 主页面 -->
+        <div id="mainPage" class="header">
+            <h1>心理咨询预约系统</h1>
+            <div class="notice">
+                <strong>来访者请注意：</strong><br>
+                1. 请如实填写预约信息，咨询师将通过预留的手机与您联系<br>
+                2. 提交预约后，请留意手机来电<br>
+                3. 您可以再次进入本系统，通过手机号查询咨询师的回复
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="showPage('client')">来访者入口</button>
+                <button class="btn btn-secondary" onclick="showPage('counselor')">咨询师入口</button>
+                <button class="btn btn-secondary" onclick="showPage('admin')">系统管理</button>
+            </div>
+            <div class="tech-phone">技术支持电话：15684510919</div>
+        </div>
+
+        <!-- 来访者页面 -->
+        <div id="clientPage" class="hidden">
+            <a class="back-link" onclick="showPage('main')">← 返回首页</a>
+            <div class="card">
+                <h2>预约咨询</h2>
+                <div class="form-group">
+                    <label>姓名 *</label>
+                    <input type="text" id="clientName" placeholder="请输入您的姓名">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>性别</label>
+                        <select id="clientGender">
+                            <option value="">请选择</option>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>年龄</label>
+                        <input type="number" id="clientAge" placeholder="请输入年龄">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>手机号码 *</label>
+                    <input type="tel" id="clientPhone" placeholder="请输入手机号码">
+                </div>
+                <div class="form-group">
+                    <label>预约日期 *</label>
+                    <input type="date" id="clientDate">
+                </div>
+                <div class="form-group">
+                    <label>咨询原因</label>
+                    <textarea id="clientReason" placeholder="请简要描述您的咨询原因" rows="3"></textarea>
+                </div>
+                <button class="btn btn-success" onclick="submitAppointment()" style="width:100%">提交预约</button>
+            </div>
+
+            <div class="card">
+                <h2>查询回复</h2>
+                <div class="form-group">
+                    <label>手机号码</label>
+                    <input type="tel" id="queryPhone" placeholder="请输入手机号码查询">
+                </div>
+                <button class="btn btn-primary" onclick="queryAppointment()" style="width:100%">查询</button>
+                <div id="queryResult"></div>
+            </div>
+        </div>
+
+        <!-- 咨询师登录页面 -->
+        <div id="counselorLoginPage" class="hidden">
+            <a class="back-link" onclick="showPage('main')">← 返回首页</a>
+            <div class="card">
+                <h2>咨询师登录</h2>
+                <div class="form-group">
+                    <label>密码</label>
+                    <input type="password" id="counselorPassword" placeholder="请输入密码">
+                </div>
+                <button class="btn btn-primary" onclick="counselorLogin()" style="width:100%">登录</button>
+                <div id="loginError" class="alert alert-error hidden" style="margin-top:15px;"></div>
+            </div>
+        </div>
+
+        <!-- 咨询师页面 -->
+        <div id="counselorPage" class="hidden">
+            <a class="back-link" onclick="logoutCounselor()">← 安全退出</a>
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('pending')">待回复 (<span id="pendingCount">0</span>)</button>
+                <button class="tab" onclick="switchTab('replied')">已回复 (<span id="repliedCount">0</span>)</button>
+            </div>
+            <div id="appointmentList"></div>
+        </div>
+
+        <!-- 管理员登录页面 -->
+        <div id="adminLoginPage" class="hidden">
+            <a class="back-link" onclick="showPage('main')">← 返回首页</a>
+            <div class="card">
+                <h2>管理员登录</h2>
+                <div class="form-group">
+                    <label>用户名</label>
+                    <input type="text" id="adminUsername" placeholder="请输入用户名">
+                </div>
+                <div class="form-group">
+                    <label>密码</label>
+                    <input type="password" id="adminPassword" placeholder="请输入密码">
+                </div>
+                <button class="btn btn-primary" onclick="adminLogin()" style="width:100%">登录</button>
+                <div id="adminLoginError" class="alert alert-error hidden" style="margin-top:15px;"></div>
+            </div>
+        </div>
+
+        <!-- 系统管理页面 -->
+        <div id="adminPage" class="hidden">
+            <a class="back-link" onclick="logoutAdmin()">← 安全退出</a>
+            <div class="card">
+                <h2>系统管理 - 密码重置</h2>
+                <div class="form-group">
+                    <label>新密码</label>
+                    <input type="password" id="newPassword" placeholder="请输入新密码">
+                </div>
+                <div class="form-group">
+                    <label>确认密码</label>
+                    <input type="password" id="confirmPassword" placeholder="请再次输入新密码">
+                </div>
+                <button class="btn btn-success" onclick="resetPassword()" style="width:100%">重置密码</button>
+                <div id="passwordMsg"></div>
+            </div>
+            <div class="card">
+                <h2>数据管理</h2>
+                <p style="color:#666;font-size:14px;margin-bottom:15px;">当前共有 <span id="totalCount">0</span> 条预约记录</p>
+                <button class="btn btn-secondary" onclick="exportData()" style="width:100%;margin-bottom:10px;">导出数据</button>
+                <button class="btn btn-danger" onclick="clearData()" style="width:100%">清空所有数据</button>
+                <div id="dataMsg"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 数据存储
+        const STORAGE_KEY = 'consultation_appointments';
+        const PASSWORD_KEY = 'consultation_password';
+        const DEFAULT_PASSWORD = 'zhy760618';
+        const ADMIN_USER = 'administrator';
+        const ADMIN_PASS = '654321';
+        let isCounselorLoggedIn = false;
+        let isAdminLoggedIn = false;
+
+        function getAppointments() {
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : [];
+        }
+
+        function saveAppointments(appointments) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(appointments));
+        }
+
+        function getPassword() {
+            return localStorage.getItem(PASSWORD_KEY) || DEFAULT_PASSWORD;
+        }
+
+        function savePassword(password) {
+            localStorage.setItem(PASSWORD_KEY, password);
+        }
+
+        // 页面切换
+        function showPage(page) {
+            document.getElementById('mainPage').classList.add('hidden');
+            document.getElementById('clientPage').classList.add('hidden');
+            document.getElementById('counselorLoginPage').classList.add('hidden');
+            document.getElementById('counselorPage').classList.add('hidden');
+            document.getElementById('adminLoginPage').classList.add('hidden');
+            document.getElementById('adminPage').classList.add('hidden');
+
+            if (page === 'main') {
+                document.getElementById('mainPage').classList.remove('hidden');
+            } else if (page === 'client') {
+                document.getElementById('clientPage').classList.remove('hidden');
+            } else if (page === 'counselor') {
+                document.getElementById('counselorLoginPage').classList.remove('hidden');
+            } else if (page === 'counselorLoggedIn') {
+                document.getElementById('counselorPage').classList.remove('hidden');
+                loadAppointments('pending');
+            } else if (page === 'admin') {
+                document.getElementById('adminLoginPage').classList.remove('hidden');
+            } else if (page === 'adminLoggedIn') {
+                document.getElementById('adminPage').classList.remove('hidden');
+                updateAdminStats();
+            }
+        }
+
+        // 管理员登录
+        function adminLogin() {
+            const username = document.getElementById('adminUsername').value.trim();
+            const password = document.getElementById('adminPassword').value;
+            const errorDiv = document.getElementById('adminLoginError');
+
+            if (username === ADMIN_USER && password === ADMIN_PASS) {
+                isAdminLoggedIn = true;
+                errorDiv.classList.add('hidden');
+                document.getElementById('adminUsername').value = '';
+                document.getElementById('adminPassword').value = '';
+                showPage('adminLoggedIn');
+            } else {
+                errorDiv.textContent = '用户名或密码错误';
+                errorDiv.classList.remove('hidden');
+            }
+        }
+
+        // 管理员退出
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            showPage('main');
+        }
+
+        // 咨询师登录
+        function counselorLogin() {
+            const password = document.getElementById('counselorPassword').value;
+            const errorDiv = document.getElementById('loginError');
+
+            if (password === getPassword()) {
+                isCounselorLoggedIn = true;
+                errorDiv.classList.add('hidden');
+                document.getElementById('counselorPassword').value = '';
+                showPage('counselorLoggedIn');
+            } else {
+                errorDiv.textContent = '密码错误，请重试';
+                errorDiv.classList.remove('hidden');
+            }
+        }
+
+        // 咨询师退出
+        function logoutCounselor() {
+            isCounselorLoggedIn = false;
+            showPage('main');
+        }
+
+        // 密码重置
+        function resetPassword() {
+            const newPwd = document.getElementById('newPassword').value;
+            const confirmPwd = document.getElementById('confirmPassword').value;
+            const msgDiv = document.getElementById('passwordMsg');
+
+            if (!newPwd || !confirmPwd) {
+                msgDiv.innerHTML = '<div class="alert alert-error">请填写完整</div>';
+                return;
+            }
+            if (newPwd !== confirmPwd) {
+                msgDiv.innerHTML = '<div class="alert alert-error">两次密码不一致</div>';
+                return;
+            }
+            savePassword(newPwd);
+            msgDiv.innerHTML = '<div class="alert alert-success">密码重置成功！</div>';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+        }
+
+        // 更新管理页面统计
+        function updateAdminStats() {
+            const appointments = getAppointments();
+            document.getElementById('totalCount').textContent = appointments.length;
+        }
+
+        // 导出数据
+        function exportData() {
+            const appointments = getAppointments();
+            const dataStr = JSON.stringify(appointments, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'consultation_data_' + new Date().toISOString().slice(0,10) + '.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            document.getElementById('dataMsg').innerHTML = '<div class="alert alert-success">数据导出成功！</div>';
+        }
+
+        // 清空数据
+        function clearData() {
+            if (confirm('确定要清空所有预约数据吗？此操作不可恢复！')) {
+                if (confirm('再次确认：是否清空所有数据？')) {
+                    localStorage.removeItem(STORAGE_KEY);
+                    updateAdminStats();
+                    document.getElementById('dataMsg').innerHTML = '<div class="alert alert-success">数据已清空！</div>';
+                }
+            }
+        }
+
+        // 提交预约
+        function submitAppointment() {
+            const name = document.getElementById('clientName').value.trim();
+            const gender = document.getElementById('clientGender').value;
+            const age = document.getElementById('clientAge').value;
+            const phone = document.getElementById('clientPhone').value.trim();
+            const date = document.getElementById('clientDate').value;
+            const reason = document.getElementById('clientReason').value.trim();
+
+            if (!name || !phone || !date) {
+                alert('请填写必填项（姓名、手机号、预约日期）');
+                return;
+            }
+
+            const appointments = getAppointments();
+            const newAppointment = {
+                id: Date.now().toString(),
+                name,
+                gender: gender || '未填写',
+                age: age || '未填写',
+                phone,
+                date,
+                reason: reason || '未填写',
+                reply: '',
+                status: 'pending',
+                createTime: new Date().toISOString()
+            };
+
+            appointments.push(newAppointment);
+            saveAppointments(appointments);
+
+            alert('预约成功！咨询师将尽快与您联系。');
+            // 清空表单
+            document.getElementById('clientName').value = '';
+            document.getElementById('clientGender').value = '';
+            document.getElementById('clientAge').value = '';
+            document.getElementById('clientPhone').value = '';
+            document.getElementById('clientDate').value = '';
+            document.getElementById('clientReason').value = '';
+        }
+
+        // 查询预约
+        function queryAppointment() {
+            const phone = document.getElementById('queryPhone').value.trim();
+            if (!phone) {
+                alert('请输入手机号码');
+                return;
+            }
+
+            const appointments = getAppointments()
+                .filter(a => a.phone === phone)
+                .sort((a, b) => new Date(b.createTime) - new Date(a.createTime));
+
+            const resultDiv = document.getElementById('queryResult');
+            if (appointments.length === 0) {
+                resultDiv.innerHTML = '<div class="alert alert-error">未找到该手机号的预约记录</div>';
+                return;
+            }
+
+            let html = '';
+            appointments.forEach(app => {
+                const statusClass = app.status === 'pending' ? 'result-pending' : 'result-replied';
+                const statusText = app.status === 'pending' ? '待回复' : '已回复';
+                const replyContent = app.reply || '等待咨询师回复...';
+
+                html += `
+                    <div class="result ${statusClass}">
+                        <div class="result-title">预约日期：${app.date} | 状态：${statusText}</div>
+                        <div class="result-content">
+                            <strong>咨询原因：</strong>${app.reason}<br>
+                            <strong>咨询师回复：</strong><br>
+                            ${replyContent}
+                        </div>
+                    </div>
+                `;
+            });
+            resultDiv.innerHTML = html;
+        }
+
+        // Tab切换
+        let currentTab = 'pending';
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            loadAppointments(tab);
+        }
+
+        // 加载预约列表
+        function loadAppointments(filter) {
+            const appointments = getAppointments();
+            const pendingList = appointments.filter(a => a.status === 'pending');
+            const repliedList = appointments.filter(a => a.status === 'replied').reverse();
+
+            document.getElementById('pendingCount').textContent = pendingList.length;
+            document.getElementById('repliedCount').textContent = repliedList.length;
+
+            const list = filter === 'pending' ? pendingList : repliedList;
+            const listDiv = document.getElementById('appointmentList');
+
+            if (list.length === 0) {
+                listDiv.innerHTML = '<div class="empty">' + (filter === 'pending' ? '暂无待回复的预约' : '暂无已回复的记录') + '</div>';
+                return;
+            }
+
+            let html = '';
+            list.forEach(app => {
+                html += `
+                    <div class="appointment-item ${app.status}">
+                        <div class="appointment-info">
+                            <strong>${app.name}</strong> |
+                            ${app.gender} |
+                            ${app.age}岁 |
+                            手机：${app.phone}<br>
+                            预约日期：${app.date}<br>
+                            <strong>咨询原因：</strong>${app.reason}<br>
+                            提交时间：${new Date(app.createTime).toLocaleString('zh-CN')}
+                        </div>
+                        ${app.status === 'pending' ? `
+                            <div class="appointment-actions">
+                                <div class="form-group">
+                                    <textarea id="reply-${app.id}" placeholder="请输入回复内容"></textarea>
+                                </div>
+                                <button class="btn btn-success" onclick="submitReply('${app.id}')">提交回复</button>
+                            </div>
+                        ` : `
+                            <div class="appointment-actions" style="color:#52c41a;">
+                                <strong>已回复：</strong>${app.reply}
+                            </div>
+                        `}
+                    </div>
+                `;
+            });
+            listDiv.innerHTML = html;
+        }
+
+        // 提交回复
+        function submitReply(id) {
+            const reply = document.getElementById('reply-' + id).value.trim();
+            if (!reply) {
+                alert('请输入回复内容');
+                return;
+            }
+
+            const appointments = getAppointments();
+            const index = appointments.findIndex(a => a.id === id);
+            if (index !== -1) {
+                appointments[index].reply = reply;
+                appointments[index].status = 'replied';
+                saveAppointments(appointments);
+                alert('回复成功！');
+                loadAppointments(currentTab);
+            }
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 设置默认日期为明天
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('clientDate').min = tomorrow.toISOString().split('T')[0];
+        });
+    </script>
+</body>
+</html>

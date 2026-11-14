@@ -2,70 +2,76 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#eef2f7">
 <title>心理咨询预约系统</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;background:#f5f7fa;color:#333;min-height:100vh;line-height:1.6}
-.container{max-width:680px;margin:0 auto;padding:20px}
-.header{background:#fff;border-radius:10px;padding:32px 22px;text-align:center;margin-bottom:18px}
-.header h1{font-size:23px;font-weight:500;margin-bottom:16px}
-.notice{background:#f0f7ff;border-radius:6px;padding:14px;text-align:left;font-size:14px;color:#555}
-.notice strong{color:#333}
-.btn-group{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px}
-.btn{padding:12px 26px;border:none;border-radius:6px;font-size:15px;cursor:pointer;transition:background .2s;font-family:inherit}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;background:#eef2f7;color:#2c3038;min-height:100vh;line-height:1.6;font-size:15px}
+.container{width:100%;max-width:480px;margin:0 auto;padding:12px 12px 28px;padding-bottom:calc(28px + env(safe-area-inset-bottom))}
+.header{background:#fff;border-radius:14px;padding:22px 18px;text-align:center;margin-bottom:12px}
+.header h1{font-size:21px;font-weight:500;margin-bottom:14px;letter-spacing:.5px}
+.notice{background:#f0f7ff;border-radius:10px;padding:12px 14px;text-align:left;font-size:13px;line-height:1.8;color:#4a5563}
+.notice strong{color:#2c3038}
+.btn-group{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.btn{width:100%;min-height:48px;padding:12px 16px;border:none;border-radius:10px;font-size:16px;cursor:pointer;transition:background .2s;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;text-align:center}
 .btn:disabled{opacity:.6;cursor:not-allowed}
-.btn-primary{background:#4a90d9;color:#fff}
+.btn-primary{background:#3f83cc;color:#fff}
 .btn-primary:hover:not(:disabled){background:#357abd}
-.btn-secondary{background:#fff;color:#4a90d9;border:1px solid #4a90d9}
+.btn-secondary{background:#fff;color:#3f83cc;border:1px solid #3f83cc}
 .btn-secondary:hover:not(:disabled){background:#f0f7ff}
-.btn-success{background:#52c41a;color:#fff}
+.btn-success{background:#43a824;color:#fff}
 .btn-success:hover:not(:disabled){background:#389e0d}
-.btn-danger{background:#ff4d4f;color:#fff}
+.btn-danger{background:#e25052;color:#fff}
 .btn-danger:hover:not(:disabled){background:#d9363e}
-.btn-plain{background:#f0f2f5;color:#555}
-.btn-sm{padding:7px 12px;font-size:13px;border-radius:5px}
-.tech{text-align:center;padding-top:16px;color:#999;font-size:13px}
-.card{background:#fff;border-radius:10px;padding:22px;margin-bottom:16px}
-.card h2{font-size:17px;font-weight:500;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #eee}
-.form-group{margin-bottom:16px}
-.form-group label{display:block;margin-bottom:6px;font-size:14px;color:#666}
-.form-group input,.form-group select,.form-group textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:6px;font-size:15px;font-family:inherit}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:#4a90d9}
-.form-group textarea{resize:vertical;min-height:80px}
-.form-row{display:flex;gap:14px;flex-wrap:wrap}
-.form-row .form-group{flex:1;min-width:130px}
-.back-link{display:inline-block;margin-bottom:14px;color:#4a90d9;font-size:14px;cursor:pointer}
-.alert{padding:11px 14px;border-radius:6px;margin:12px 0;font-size:14px}
+.btn-plain{background:#eef1f5;color:#4a5563}
+.btn-sm{width:auto;flex:1;min-width:0;min-height:44px;padding:9px 14px;font-size:14px;border-radius:10px}
+.tech{text-align:center;padding-top:18px;color:#8a94a3;font-size:12px}
+.card{background:#fff;border-radius:14px;padding:16px;margin-bottom:12px}
+.card h2{font-size:16px;font-weight:500;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #eef0f4}
+.actions{display:flex;flex-direction:column;gap:10px}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;margin-bottom:6px;font-size:14px;color:#5a6472}
+.form-group input,.form-group select,.form-group textarea{width:100%;min-height:46px;padding:11px 12px;border:1px solid #d8dee8;border-radius:10px;font-size:16px;font-family:inherit;background:#fff;color:#2c3038}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:#3f83cc}
+.form-group textarea{resize:vertical;min-height:96px;line-height:1.6}
+.form-row{display:block}
+.form-row .form-group{min-width:0}
+.back-link{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;margin-bottom:6px;color:#3f83cc;font-size:15px;cursor:pointer}
+.alert{padding:12px 14px;border-radius:10px;margin:12px 0;font-size:14px;line-height:1.6}
 .alert-success{background:#f6ffed;border:1px solid #b7eb8f;color:#3f6600}
 .alert-error{background:#fff2f0;border:1px solid #ffccc7;color:#c53030}
 .alert-info{background:#f0f7ff;border:1px solid #b5d4f4;color:#185fa5}
-.tabs{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-.tab{padding:9px 18px;border:none;background:#eef1f5;border-radius:6px;cursor:pointer;font-size:14px;font-family:inherit}
-.tab.active{background:#4a90d9;color:#fff}
-.item{border:1px solid #e8e8e8;border-radius:8px;padding:15px;margin-bottom:14px}
-.item.pending{border-left:3px solid #faad14}
-.item.replied{border-left:3px solid #52c41a}
-.item .line{font-size:14px;color:#555;margin-bottom:4px}
-.item .line strong{color:#333}
-.item .reply-box{margin-top:12px;padding-top:12px;border-top:1px solid #eee}
-.item .reply-done{margin-top:12px;padding-top:12px;border-top:1px solid #eee;color:#3f6600;font-size:14px}
-.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:12px;margin-left:6px}
+.tabs{display:flex;gap:8px;margin-bottom:12px}
+.tab{flex:1;min-width:0;min-height:46px;padding:9px 6px;border:none;background:#eef1f5;border-radius:10px;cursor:pointer;font-size:14px;font-family:inherit;color:#5a6472}
+.tab.active{background:#3f83cc;color:#fff}
+.item{border:1px solid #e6eaf0;border-left:4px solid #faad14;border-radius:12px;padding:14px;margin-bottom:12px;background:#fff}
+.item.replied{border-left-color:#43a824}
+.item-title{font-size:16px;font-weight:500;margin-bottom:10px;color:#2c3038}
+.kv{display:flex;gap:10px;font-size:14px;margin-bottom:5px}
+.kv .k{flex:0 0 72px;color:#8a94a3}
+.kv .v{flex:1;min-width:0;overflow-wrap:anywhere;color:#3d4552}
+.item .line{font-size:14px;color:#555;margin-bottom:4px;overflow-wrap:anywhere}
+.item .line strong{color:#2c3038}
+.item .reply-box{margin-top:12px;padding-top:12px;border-top:1px solid #eef0f4}
+.item .reply-done{margin-top:12px;padding-top:12px;border-top:1px solid #eef0f4;color:#3f6600;font-size:14px;overflow-wrap:anywhere}
+.badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:12px;margin-left:6px;vertical-align:middle}
 .badge-pending{background:#fff7e6;color:#ad6800}
 .badge-replied{background:#f6ffed;color:#3f6600}
-.empty{text-align:center;padding:32px;color:#999;font-size:14px}
-.stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
-.stat{flex:1;min-width:100px;background:#f7f9fc;border-radius:8px;padding:14px;text-align:center}
-.stat b{display:block;font-size:24px;font-weight:500;color:#185fa5}
-.stat span{font-size:13px;color:#777}
-table{width:100%;border-collapse:collapse;font-size:14px}
-th,td{padding:9px 6px;border-bottom:1px solid #eee;text-align:left;vertical-align:middle}
-th{color:#777;font-weight:500}
-.ops{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.ops input{width:120px;padding:6px 8px;border:1px solid #ddd;border-radius:5px;font-size:13px}
-.muted{color:#999;font-size:13px}
-.hint{font-size:13px;color:#888;margin-top:8px}
-.hidden{display:none}
+.empty{text-align:center;padding:28px 12px;color:#8a94a3;font-size:14px}
+.stats{display:flex;gap:8px;margin-bottom:14px}
+.stat{flex:1;min-width:0;background:#f4f7fb;border-radius:10px;padding:12px 4px;text-align:center}
+.stat b{display:block;font-size:22px;font-weight:500;color:#185fa5}
+.stat span{font-size:12px;color:#7a8492}
+.staff-card{border:1px solid #e6eaf0;border-radius:12px;padding:14px;margin-bottom:12px}
+.staff-head{font-size:15px;font-weight:500;margin-bottom:8px}
+.ops{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.ops input{flex:1 1 100%;width:100%;min-height:44px;padding:10px 12px;border:1px solid #d8dee8;border-radius:10px;font-size:16px;font-family:inherit}
+.ops .btn{flex:1;min-width:0}
+.muted{color:#8a94a3;font-size:13px}
+.hint{font-size:12px;color:#8a94a3;margin-top:8px;overflow-wrap:anywhere}
+.hidden{display:none!important}
 </style>
 </head>
 <body>
@@ -130,8 +136,8 @@ th{color:#777;font-weight:500}
       <div class="tabs">
         <button class="tab active" id="tabPending" onclick="switchTab('pending',this)">待回复 (<span id="pendingCount">0</span>)</button>
         <button class="tab" id="tabReplied" onclick="switchTab('replied',this)">已回复 (<span id="repliedCount">0</span>)</button>
-        <button class="btn btn-plain btn-sm" onclick="refreshCounselor()">刷新</button>
       </div>
+      <button class="btn btn-plain" style="margin-bottom:12px" onclick="refreshCounselor()">刷新列表</button>
       <div id="counselorList"></div>
       <div id="counselorMsg"></div>
     </div>
@@ -152,8 +158,10 @@ th{color:#777;font-weight:500}
         <div class="stat"><b id="statPending">0</b><span>待回复</span></div>
         <div class="stat"><b id="statReplied">0</b><span>已回复</span></div>
       </div>
-      <button class="btn btn-secondary btn-sm" onclick="exportData(this)">导出数据</button>
-      <button class="btn btn-danger btn-sm" onclick="clearData(this)">清空所有预约</button>
+      <div class="actions">
+        <button class="btn btn-secondary" onclick="exportData(this)">导出数据</button>
+        <button class="btn btn-danger" onclick="clearData(this)">清空所有预约</button>
+      </div>
       <div id="adminMsg"></div>
     </div>
     <div class="card">
@@ -339,10 +347,10 @@ async function queryAppointment(btn) {
       }
       box.innerHTML = items.map(a =>
         '<div class="item ' + (a.status === 'pending' ? 'pending' : 'replied') + '">' +
-        '<div class="line"><strong>预约日期：</strong>' + esc(a.visit_date) +
-        '<span class="badge ' + (a.status === 'pending' ? 'badge-pending">待回复' : 'badge-replied">已回复') + '</span></div>' +
-        '<div class="line"><strong>咨询原因：</strong>' + esc(a.reason) + '</div>' +
-        '<div class="reply-done"><strong>咨询师回复：</strong><br>' +
+        '<div class="item-title">我的预约' + renderBadge(a.status) + '</div>' +
+        '<div class="kv"><span class="k">预约日期</span><span class="v">' + esc(a.visit_date) + '</span></div>' +
+        '<div class="kv"><span class="k">咨询原因</span><span class="v">' + esc(a.reason) + '</span></div>' +
+        '<div class="reply-done"><strong>咨询师回复</strong><br>' +
         (a.reply ? esc(a.reply) : '咨询师尚未回复，请耐心等待') + '</div>' +
         '<div class="hint">提交时间：' + esc(a.created_at) + '</div></div>'
       ).join('');
@@ -383,13 +391,15 @@ async function refreshCounselor() {
     }
     box.innerHTML = items.map(a =>
       '<div class="item ' + (a.status === 'pending' ? 'pending' : 'replied') + '">' +
-      '<div class="line"><strong>' + esc(a.name) + '</strong> | ' + esc(a.gender) + ' | ' + esc(a.age) + '岁 | 手机：' + esc(a.phone) + renderBadge(a.status) + '</div>' +
-      '<div class="line"><strong>预约日期：</strong>' + esc(a.visit_date) + '</div>' +
-      '<div class="line"><strong>咨询原因：</strong>' + esc(a.reason) + '</div>' +
+      '<div class="item-title">' + esc(a.name) + renderBadge(a.status) + '</div>' +
+      '<div class="kv"><span class="k">性别 / 年龄</span><span class="v">' + esc(a.gender) + ' · ' + esc(a.age) + ' 岁</span></div>' +
+      '<div class="kv"><span class="k">手机号</span><span class="v">' + esc(a.phone) + '</span></div>' +
+      '<div class="kv"><span class="k">预约日期</span><span class="v">' + esc(a.visit_date) + '</span></div>' +
+      '<div class="kv"><span class="k">咨询原因</span><span class="v">' + esc(a.reason) + '</span></div>' +
       '<div class="hint">提交时间：' + esc(a.created_at) + '</div>' +
       (a.status === 'pending'
-        ? '<div class="reply-box"><div class="form-group"><textarea id="reply-' + esc(a.id) + '" rows="2" maxlength="4000" placeholder="请输入回复内容"></textarea></div>' +
-          '<button class="btn btn-success btn-sm" onclick="submitReply(this,' + esc(a.id) + ')">提交回复</button></div>'
+        ? '<div class="reply-box"><div class="form-group"><textarea id="reply-' + esc(a.id) + '" rows="3" maxlength="4000" placeholder="请输入回复内容"></textarea></div>' +
+          '<button class="btn btn-success" onclick="submitReply(this,' + esc(a.id) + ')">提交回复</button></div>'
         : '<div class="reply-done"><strong>已回复：</strong>' + esc(a.reply) + '</div>') +
       '</div>'
     ).join('');
@@ -421,18 +431,20 @@ async function loadAdmin() {
     document.getElementById('statPending').textContent = ov.pending;
     document.getElementById('statReplied').textContent = ov.replied;
     const rows = Array.isArray(staff.items) ? staff.items : [];
-    document.getElementById('staffTable').innerHTML =
-      '<table><tr><th>账号</th><th>姓名</th><th>角色</th><th>状态</th><th>操作 / 重置密码</th></tr>' +
-      rows.map(s =>
-        '<tr><td>' + esc(s.username) + '</td><td>' + esc(s.name) + '</td>' +
-        '<td>' + (s.role === 'admin' ? '管理员' : '咨询师') + '</td>' +
-        '<td>' + (s.active ? '在用' : '已停用') + '</td>' +
-        '<td><div class="ops">' +
-        '<button class="btn btn-plain btn-sm" onclick="toggleStaff(this,' + esc(s.id) + ')">' + (s.active ? '停用' : '启用') + '</button>' +
-        '<input type="password" id="np-' + esc(s.id) + '" placeholder="新密码">' +
-        '<button class="btn btn-secondary btn-sm" onclick="resetPassword(this,' + esc(s.id) + ')">重置</button>' +
-        '</div></td></tr>'
-      ).join('') + '</table>';
+    document.getElementById('staffTable').innerHTML = rows.length
+      ? rows.map(s =>
+          '<div class="staff-card">' +
+          '<div class="staff-head">' + esc(s.username) +
+          (s.active ? '<span class="badge badge-replied">在用</span>' : '<span class="badge badge-pending">已停用</span>') + '</div>' +
+          '<div class="kv"><span class="k">姓名</span><span class="v">' + esc(s.name) + '</span></div>' +
+          '<div class="kv"><span class="k">角色</span><span class="v">' + (s.role === 'admin' ? '管理员' : '咨询师') + '</span></div>' +
+          '<div class="ops">' +
+          '<input type="password" id="np-' + esc(s.id) + '" placeholder="输入新密码">' +
+          '<button class="btn btn-plain btn-sm" onclick="toggleStaff(this,' + esc(s.id) + ')">' + (s.active ? '停用' : '启用') + '</button>' +
+          '<button class="btn btn-secondary btn-sm" onclick="resetPassword(this,' + esc(s.id) + ')">重置密码</button>' +
+          '</div></div>'
+        ).join('')
+      : '<div class="empty">暂无账号</div>';
   } catch (e) { setMsg('adminMsg', errText(e), 'error'); }
 }
 
